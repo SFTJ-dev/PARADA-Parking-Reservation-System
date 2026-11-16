@@ -1,0 +1,161 @@
+/* COLOR */
+:root {
+    --bg: #EFEBE4;
+    --warmGray: #D9D6CE;
+    --outline: #2B2B2B;
+    --blue: #2F6DB5;
+    --green: #9BC53D;
+    --orange: #E8821E;
+    --lightGreen: #DDEBB5;
+    --red: #F3C9C4;    /* Para ma-call yung color: "var(--color name here)" */
+}
+
+/* MAIN */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Patrick Hand', cursive;
+    background-color: var(--bg);
+}
+
+/* HEADER*/
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+    padding: 0;
+}
+
+.header .logo {
+    margin-left: 13px;
+}
+
+.header .logo img {
+    height: 80px;
+    width: auto;
+    display: block;
+}
+
+.header .notif {
+    padding: 13px;
+    font-size: larger;
+}
+
+/* PAGE */
+.page {
+    display: none;
+}
+
+.pageActive {
+    display: block;
+}
+
+main {
+    padding: 0 20px 100px;
+}
+
+/* NAV BABA */
+nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    gap: 20px;
+    padding: 12px 0;
+    justify-content: center;
+    background-color: var(--bg);
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav li {
+    display: flex;
+    list-style: none;
+    margin: auto;
+}
+
+.navLinks a {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--outline);
+}
+
+.navLinks a:hover, .navLinks a.navActive {
+    color: var(--blue);
+    background-color: var(--warmGray);
+}
+
+.navLinks a:hover i, .navLinks a.navActive i {
+    font-family: 'Material Icons';
+}
+
+/* HOME */
+.slotCard {
+    padding: 10px 14px;
+    background-color: var(--warmGray);
+    border: 2px solid var(--outline);
+    border-radius: 10px 12px 9px 11px;
+    width: 50%;
+    min-width: 260px;
+    margin: 12px auto 0;
+}
+
+.slotTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 1.1rem;
+    color: var(--outline);
+}
+
+.slotCount b {
+    font-family: 'Gochi Hand', cursive;
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.slotBar {
+    height: 8px;
+    margin: 6px 0 4px;
+    background-color: var(--bg);
+    border: 1.5px solid var(--outline);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.slotBarFill {
+    height: 100%;
+    background-color: var(--green);
+}
+
+.slotStatus {
+    font-size: 0.9rem;
+    color: var(--outline);
+    opacity: 0.7;
+}
+
+.slotCard.low .slotBarFill  { background-color: var(--orange); }
+.slotCard.full              { background-color: var(--red); }
+.slotCard.full .slotBarFill { background-color: var(--outline); }
