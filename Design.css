@@ -102,7 +102,7 @@ nav li {
     color: var(--outline);
 }
 
-.navLinks a:hover, .navLinks a.navActive {
+.navLinks a:hover, .navLinks{
     color: var(--blue);
     background-color: var(--warmGray);
 }
