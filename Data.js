@@ -1,4 +1,4 @@
-let elements = document.querySelectorAll('.navACtive')
+let elements = document.querySelectorAll('.navActive')
 
 elements.forEach(el => {
   el.addEventListener('click', () => {
