@@ -102,13 +102,18 @@ nav li {
     color: var(--outline);
 }
 
-.navLinks a:hover, .navLinks{
+.navLinks a:hover{
     color: var(--blue);
     background-color: var(--warmGray);
 }
 
 .navLinks a:hover i, .navLinks a.navActive i {
     font-family: 'Material Icons';
+}
+
+.navAct{
+    color: var(--blue);
+    background-color: var(--warmGray);
 }
 
 /* HOME */
