@@ -111,7 +111,7 @@ nav li {
     font-family: 'Material Icons';
 }
 
-.navAct a.navActive {
+.activeNav {
     color: var(--blue);
     background-color: var(--warmGray);
 }
