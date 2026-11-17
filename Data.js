@@ -1,4 +1,4 @@
-const navItems = document.querySelectorAll('.navAct')
+const navItems = document.querySelectorAll('.navAct');
 
 navItems.forEach(item => {
     item.addEventListener('click', () => {
