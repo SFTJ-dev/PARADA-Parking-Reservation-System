@@ -114,6 +114,7 @@ nav li {
 .activeNav {
     color: var(--blue);
     background-color: var(--warmGray);
+    border-radius: 12px;
 }
 
 /* HOME */
@@ -164,3 +165,4 @@ nav li {
 .slotCard.low .slotBarFill  { background-color: var(--orange); }
 .slotCard.full              { background-color: var(--red); }
 .slotCard.full .slotBarFill { background-color: var(--outline); }
+
