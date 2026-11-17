@@ -1,7 +1,10 @@
-let elements = document.getElementsByClassName('.navAct')
+let elements = document.querySelectorAll(".navAct").addEventListener("click", el)
 
-elements.forEach(el => {
-  el.addEventListener('click', () => {
-    elements.forEach(el => el.classList.remove('activeNav'))
-    el.classList.add('activeNav')
-  })})
+  function el(){
+    elements.classList.add('activeNav')
+  }
+
+
+const STORAGE_KEY = 'paradaData';
+const TOTAL_STORAGE = '200'; //200 is example palang muna since wala pa tayong exact number
+
