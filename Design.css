@@ -107,7 +107,7 @@ nav li {
     background-color: var(--warmGray);
 }
 
-.navLinks a:hover i{
+.navLinks a:hover i, .navLinks .activeNav a i {
     font-family: 'Material Icons';
 }
 
