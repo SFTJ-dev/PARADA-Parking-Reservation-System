@@ -1,6 +1,6 @@
 const navItems = document.querySelectorAll('.navAct')
 
-navItems.forEach((item) => {
+navItems.forEach(item => {
     item.addEventListener('click', () => {
         navItems.forEach(i => i.classList.remove('activeNav'));
         item.classList.add('activeNav');
