@@ -111,7 +111,7 @@ nav li {
     font-family: 'Material Icons';
 }
 
-.navLinks li.activeNav a {
+.navLinks .activeNav a {
     color: var(--blue);
     background-color: var(--warmGray);
     border-radius: 12px;
