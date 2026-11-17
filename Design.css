@@ -117,12 +117,6 @@ nav li {
     border-radius: 12px;
 }
 
-.activeNav {
-    color: var(--blue);
-    background-color: var(--warmGray);
-    border-radius: 12px;
-}
-
 /* HOME */
 .slotCard {
     padding: 10px 14px;
