@@ -1,176 +1,83 @@
-/* COLOR */
+/* PARADA – starter CSS
+   Layout and basic usability only. Finish the TODO sections yourself. */
 :root {
-    --bg: #EFEBE4;
-    --warmGray: #D9D6CE;
-    --outline: #2B2B2B;
-    --blue: #2F6DB5;
-    --green: #9BC53D;
-    --orange: #E8821E;
-    --lightGreen: #DDEBB5;
-    --red: #F3C9C4;    /* Para ma-call yung color: "var(--color name here)" */
+    --bg: #f4f4f4;
+    --ink: #242424;
+    --line: #bdbdbd;
+    /* TODO: choose and add your theme colors */
 }
-
-/* MAIN */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+[hidden] { display: none !important; }
+body { margin: 0; color: var(--ink); background: var(--bg); font: 14px Arial, sans-serif; }
+button, a { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .55; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid #555; outline-offset: 3px; }
+.muted { color: #666; }
+.brand { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.brand img { width: 36px; height: 36px; }
+/* CSS-1: Header, nav links, active and hover styles */
+.header { padding: 8px; }
+.navLinks { display: flex; gap: 12px; }
+.navAct.activeNav { text-decoration: underline; }
+.navIcon { display: none; }
+.profileText b, .profileText small { display: block; }
+.notifPanel { position: absolute; right: 0; top: 100%; z-index: 10; width: min(300px, 85vw); background: white; border: 1px solid var(--line); }
+.notifDot { position: absolute; right: 0; top: 0; width: 7px; height: 7px; background: #555; }
+/* CSS-2: Panels, headings, mini cards, badges, spacing */
+.pageHeading { margin: 18px 0; }
+.dashboardGrid { grid-template-columns: minmax(0, 1.75fr) minmax(280px, 1fr); }
+.panel { min-width: 0; border: 1px solid var(--line); padding: 8px; }
+.currentPanel { grid-column: 1 / -1; }
+/* CSS-3: Buttons. Only basic outlines are provided. Add color, padding,
+   radius, size, hover, active and disabled design. */
+.primaryBtn, .whiteBtn, .dangerBtn, .demoBtn, .zoneBtn, .circleBtn, .profile {
+    border: 1px solid var(--line);
+    background: white;
 }
-
-html {
-    scroll-behavior: smooth;
+.zoneBtn.activeZone { text-decoration: underline; }
+.textLink { text-decoration: underline; }
+/* CSS-4: Forms. Tailwind resets native input styling, so keep a basic border. */
+label { display: block; }
+input:not([type=checkbox]), select { display: block; width: 100%; min-width: 0; border: 1px solid var(--line); background: white; }
+/* CSS-5: Parking grid – layout is supplied, improve all visual states. */
+.parkingLot { border: 1px solid var(--line); }
+.parkingRow { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); }
+.parkingSlot { min-width: 0; height: 95px; position: relative; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+.parkingSlot.selected { outline: 2px solid #555; outline-offset: -2px; }
+.parkingSlot img { width: 65%; height: 82%; object-fit: contain; }
+.parkingSlot.occupied small { position: absolute; bottom: 1px; font-size: 9px; }
+.road { height: 22px; text-align: center; }
+.lotFooter { display: flex; justify-content: space-between; }
+.legend i { display: inline-block; width: 12px; height: 12px; border: 1px solid #555; }
+.legendOccupied { background: #999; }
+.legendSelected { background: #ddd; }
+.slotBar { display: grid; grid-template-columns: repeat(24, minmax(0,1fr)); gap: 2px; }
+.slotBar span { height: 28px; border: 1px solid var(--line); }
+.slotBar span.filled { background: #777; }
+/* CSS-6: Login layout, form messages and other details. */
+.authLayout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.authArt { min-height: 500px; }
+.authForm { display: grid; align-items: center; }
+.authMobile { display: none; }
+.authParking { display: grid; grid-template-columns: repeat(4,1fr); max-width: 460px; }
+.authParking div { height: 100px; border: 1px solid var(--line); display: grid; place-items: center; }
+.authParking img { height: 85px; }
+.formMessage { color: #8b3029; }
+.formMessage:empty { display: none; }
+.formMessage.success { color: #32643c; }
+/* CSS-7: Build the Campus, Ticket, History and Settings page styles. */
+/* CSS-8: Responsive layout foundation. Improve mobile spacing and buttons. */
+@media (max-width: 950px) {
+    .dashboardGrid { grid-template-columns: minmax(0,1fr); }
+    .currentPanel { grid-column: auto; }
+    .profileText { display: none; }
 }
-
-body {
-    font-family: 'Patrick Hand', cursive;
-    background-color: var(--bg);
+@media (max-width: 700px) {
+    .navLinks { position: fixed; bottom: 0; left: 0; right: 0; background: white; z-index: 20; justify-content: space-around; padding: 8px 2px; gap: 2px; }
+    .navAct { font-size: 10px; text-align: center; }
+    .navIcon { display: block; }
+    .appShell { padding-bottom: 60px; }
+    .parkingSlot { height: 70px; }
+    .authLayout { grid-template-columns: 1fr; }
+    .authArt { display: none; }
+    .authMobile { display: flex; }
 }
-
-/* HEADER*/
-.header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px;
-    padding: 0;
-}
-
-.header .logo {
-    margin-left: 13px;
-}
-
-.header .logo img {
-    height: 80px;
-    width: auto;
-    display: block;
-}
-
-.header .notif {
-    padding: 13px;
-    font-size: larger;
-}
-
-/* PAGE */
-.page {
-    display: none;
-}
-
-.pageActive {
-    display: block;
-}
-
-main {
-    padding: 0 20px 100px;
-}
-
-/* NAV BABA */
-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    gap: 20px;
-    padding: 12px 0;
-    justify-content: center;
-    background-color: var(--bg);
-}
-
-nav ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-nav li {
-    display: flex;
-    list-style: none;
-    margin: auto;
-}
-
-.navLinks a {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 6px 14px;
-    border-radius: 12px;
-    text-decoration: none;
-    color: var(--outline);
-}
-
-.navLinks a:hover{
-    color: var(--blue);
-    background-color: var(--warmGray);
-}
-
-.navLinks a:hover i, .navLinks .activeNav a i {
-    font-family: 'Material Icons';
-}
-
-.navLinks .activeNav a {
-    color: var(--blue);
-    background-color: var(--warmGray);
-    border-radius: 12px;
-}
-
-.navLinks li.activeNav a {
-    color: var(--blue);
-    background-color: var(--warmGray);
-}
-
-.navLinks li.activeNav a i {
-    font-family: 'Material Icons';
-}
-
-/* HOME */
-.slotCard {
-    padding: 10px 14px;
-    background-color: var(--warmGray);
-    border: 2px solid var(--outline);
-    border-radius: 10px 12px 9px 11px;
-    width: 50%;
-    min-width: 260px;
-    margin: 12px auto 0;
-}
-
-.slotTop {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 1.1rem;
-    color: var(--outline);
-}
-
-.slotCount b {
-    font-family: 'Gochi Hand', cursive;
-    font-size: 1.5rem;
-    font-weight: normal;
-}
-
-.slotBar {
-    height: 8px;
-    margin: 6px 0 4px;
-    background-color: var(--bg);
-    border: 1.5px solid var(--outline);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.slotBarFill {
-    height: 100%;
-    background-color: var(--green);
-}
-
-.slotStatus {
-    font-size: 0.9rem;
-    color: var(--outline);
-    opacity: 0.7;
-}
-
-.slotCard.low .slotBarFill  { background-color: var(--orange); }
-.slotCard.full              { background-color: var(--red); }
-.slotCard.full .slotBarFill { background-color: var(--outline); }

@@ -1,84 +1,137 @@
 <!DOCTYPE html>
-    <head>
-        <title>PARADA: Parking Reservation System</title>
-
-        <link rel="stylesheet" href="Design.css">
-        <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="icon" type="image/png" href="img/Parada.png">
-
-    </head>
-
-    <body>
-        <!--HEADER-->
-        <div class="header">
-            <div class="logo">
-                <img src="Parada_icon.png" alt="PARADA logo ">
-            </div>
-            <div class="notif">
-                <i class="fa-regular fa-bell"></i>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARADA | Campus Parking</title>
+    <link rel="stylesheet" href="tailwind.css">
+    <link rel="stylesheet" href="Design.css">
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <script defer src="Data.js"></script>
+    <script type="module" src="Firebase.js"></script>
+</head>
+<body>
+    <!-- LOGIN AND SIGN UP -->
+    <section id="authPage" class="authLayout min-h-screen p-5">
+        <div class="authArt flex flex-col justify-between">
+            <div class="brand"><img src="img/logo.png" alt=""> PARADA<span>.</span></div>
+            <div><span class="eyebrow">CAMPUS PARKING SYSTEM</span><h1 class="mt-4">Less searching.<br>More parking.</h1><p class="mt-4 max-w-sm">Find a space, reserve your slot and keep your parking ticket in one place.</p></div>
+            <div class="authParking"><div></div><div><img src="img/car.svg" alt=""></div><div></div><div><img src="img/car.svg" alt=""></div></div>
+            <p class="muted">Parking system for students in Cavite State University.</p>
+        </div>
+        <div class="authForm p-5">
+            <div class="max-w-sm w-full mx-auto">
+                <div class="brand mb-8 authMobile"><img src="img/logo.png" alt=""> PARADA<span>.</span></div>
+                <p class="eyebrow">WELCOME TO PARADA</p>
+                <h2 id="authTitle" class="mt-2">Log in to your account</h2>
+                <p id="authSubtitle" class="muted mt-2 mb-6">Enter your details to continue.</p>
+                <form id="authForm" class="grid gap-4">
+                    <label id="nameField" hidden>Full name<input id="authName" autocomplete="name" maxlength="60" placeholder="Juan Dela Cruz"></label>
+                    <label>Email address<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+                    <label>Password<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters"></label>
+                    <button type="button" id="resetPassword" class="textLink justify-self-end">Forgot password?</button>
+                    <button id="authSubmit" class="primaryBtn" type="submit">Log in</button>
+                </form>
+                <div class="orLine my-5">or</div>
+                <button id="googleBtn" class="whiteBtn w-full" type="button"><span class="googleG">G</span> Continue with Google</button>
+                <p id="authMessage" class="formMessage mt-3" role="status"></p>
+                <p class="mt-5 text-center"><span id="authPrompt">Don't have an account?</span> <button id="toggleAuth" class="textLink" type="button">Sign up</button></p>
+                <button id="demoBtn" class="demoBtn w-full mt-5" type="button">Explore demo without an account</button>
             </div>
         </div>
+    </section>
 
-        <!-- MAIN MENU -->
-        <main>
-            <section id="home" class="page pageActive">
-            <h1>Home</h1>
-            <div class="slotCard" id="slotCard">
-                <div class="slotTop">
-                    <span>Parking available</span>
-                    <span class="slotCount">
-                        <b id="slotAvailable"></b>/<span id="slotTotal"></span>
-                    </span>
-                </div>
-                <div class="slotBar">
-                    <div class="slotBarFill" id="slotBarFill"></div>
-                </div>
-                <span class="slotStatus" id="slotStatus">Loading...</span>
+    <!-- HEADER -->
+    <div id="app" hidden class="appShell max-w-[1500px] mx-auto p-3 sm:p-5 lg:p-7">
+        <header class="header flex items-center justify-between gap-3">
+            <a href="#dashboard" class="brand"><img src="img/logo.png" alt=""> PARADA<span>.</span></a>
+            <nav class="navLinks" aria-label="Main navigation">
+                <a class="navAct" href="#dashboard" data-target="dashboard"><span class="navIcon">▦</span>Dashboard</a>
+                <a class="navAct" href="#campus" data-target="campus"><span class="navIcon">⌖</span>Campus</a>
+                <a class="navAct" href="#ticket" data-target="ticket"><span class="navIcon">▤</span>Ticket</a>
+                <a class="navAct" href="#history" data-target="history"><span class="navIcon">◷</span>History</a>
+                <a class="navAct" href="#settings" data-target="settings"><span class="navIcon">⚙</span>Settings</a>
+            </nav>
+            <div class="flex items-center gap-3 relative">
+                <button id="notifBtn" class="circleBtn relative" aria-label="Notifications" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="notifDot" class="notifDot" hidden></span></button>
+                <button id="profileBtn" class="profile flex items-center gap-2" aria-label="Open settings"><span id="avatar" class="avatar">P</span><span class="profileText text-left"><b id="headerName">Guest</b><small id="headerRole">Parking user</small></span></button>
+                <div id="notifPanel" class="notifPanel" hidden><h3 class="mb-3">Notifications</h3><div id="notifList"></div></div>
             </div>
-        </section>
+        </header>
+        <div class="flex justify-end mt-2"><button id="logoutBtn" class="textLink">Log out</button></div>
+        <div id="demoBanner" class="demoBanner" hidden>Demo mode · sample parking data stored on this browser. <button id="exitDemo" class="textLink">Back to login</button></div>
+        <p id="appMessage" class="formMessage" role="status"></p>
 
-        <section id="campus" class="page">
-            <h1>Campus</h1>
-        </section>
+        <!-- DASHBOARD -->
+        <main>
+            <section id="dashboard" class="page">
+                <div class="pageHeading flex flex-wrap items-end justify-between gap-3">
+                    <div><p class="eyebrow">YOUR CAMPUS, YOUR SPACE</p><h1 id="greeting">Good morning!</h1><p class="muted">Here's what's happening with campus parking today.</p></div>
+                    <div class="dateBadge"><span>◷</span> <span id="todayDate"></span></div>
+                </div>
+                <div class="dashboardGrid grid gap-4">
+                    <div class="panel parkingPanel">
+                        <div class="flex items-start justify-between gap-3 mb-4"><div><h2>Campus parking</h2><p class="muted mt-1">Select an available space to get started.</p></div><span class="liveBadge"><span></span><span id="liveLabel">Demo</span></span></div>
+                        <div id="zoneTabs" class="grid grid-cols-4 gap-2 mb-3"></div>
+                        <div class="parkingLot">
+                            <div class="lotHeader flex items-center justify-between gap-2"><span id="zoneName">Zone A</span><span id="zoneAvailability" class="muted"></span></div>
+                            <div id="parkingRows"></div>
+                            <div class="lotFooter"><span>← ENTRY</span><span>EXIT →</span></div>
+                        </div>
+                        <div class="legend flex flex-wrap gap-4 mt-4"><span><i class="legendFree"></i>Available</span><span><i class="legendOccupied"></i>Occupied</span><span><i class="legendSelected"></i>Selected</span></div>
+                    </div>
+                    <div class="grid gap-4 content-start">
+                        <div class="panel overviewPanel">
+                            <div class="flex justify-between items-center"><h2>Parking overview</h2><span class="muted">•••</span></div>
+                            <div class="flex items-end gap-2 mt-4"><strong id="slotAvailable" class="bigNumber">0</strong><span class="muted mb-1">/ <span id="slotTotal">0</span> spaces free</span></div>
+                            <div id="slotBarFill" class="slotBar my-3"></div>
+                            <div class="grid grid-cols-2 gap-2"><div class="miniCard"><p class="muted">Available</p><b id="availableCount">0</b></div><div class="miniCard"><p class="muted">Occupied</p><b id="occupiedCount">0</b></div></div>
+                        </div>
+                        <div class="panel bookingPanel">
+                            <h2>Book your parking</h2><p class="muted mt-1 mb-4">Reserve a space for your current visit.</p>
+                            <form id="bookingForm" class="grid gap-3">
+                                <div class="selectedInfo flex items-center justify-between gap-2"><span class="muted">Selected space</span><b id="selectedSlot">Select a slot</b></div>
+                                <label>Plate number<input id="plate" required maxlength="12" placeholder="ABC 1234" autocomplete="off"></label>
+                                <div class="grid grid-cols-2 gap-2"><label>Vehicle<select id="vehicle"><option>Car</option><option>Motorcycle</option></select></label><label>Expected exit<input id="exitTime" type="time" required></label></div>
+                                <button id="bookBtn" class="primaryBtn" type="submit" disabled>Reserve parking <span>→</span></button>
+                                <p id="bookingHint" class="muted">Choose a free slot on the parking map.</p>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="panel currentPanel flex flex-wrap items-center justify-between gap-4"><div><p class="eyebrow">YOUR RESERVATION</p><h2 class="mt-1" id="currentTitle">No active ticket</h2><p class="muted mt-1" id="currentDetail">Your parking details will appear here.</p></div><a href="#ticket" class="whiteBtn">View ticket →</a></div>
+                </div>
+            </section>
 
-        <section id="ticket" class="page">
-            <h1>Ticket</h1>
-        </section>
+            
+            <!-- CAMPUS -->
+            <section id="campus" class="page" hidden>
+                <h1 class="mt-6 mb-4">Campus</h1>
+                <!-- TODO: Build this page. -->
+                <p>Page under development.</p>
+            </section>
 
-        <section id="history" class="page">
-            <h1>History</h1>
-        </section>
-
-        <section id="settings" class="page">
-            <h1>Settings</h1>
-        </section>
-    </main>
-
-        <!-- NAV BABA -->
-<div class="navLinks">
-  <nav>
-    <ul>
-      <li class="navAct activeNav home">
-        <a href="#home" data-target="home"><i class="material-icons-outlined">home</i><span>Home</span></a>
-      </li>
-      <li class="navAct campus">
-        <a href="#campus" data-target="campus"><i class="material-icons-outlined">map</i><span>Campus</span></a>
-      </li>
-      <li class="navAct ticket">
-        <a href="#ticket" data-target="ticket"><i class="material-icons-outlined">confirmation_number</i><span>Ticket</span></a>
-      </li>
-      <li class="navAct history">
-        <a href="#history" data-target="history"><i class="material-icons-outlined">history</i><span>History</span></a>
-      </li>
-      <li class="navAct settings">
-        <a href="#settings" data-target="settings"><i class="material-icons-outlined">settings</i><span>Settings</span></a>
-      </li>
-    </ul>
-  </nav>
-</div>
-  <script src="Data.js"></script>
-    </body>
+            <!-- TICKET -->
+            <section id="ticket" class="page" hidden>
+                <div class="pageHeading"><p class="eyebrow">YOUR PARKING PASS</p><h1>Ticket</h1><p class="muted">View or manage your current reservation.</p></div>
+                <div class="panel">
+                    <p id="ticketContent">No active ticket.</p>
+                    <!-- TODO: Add the ticket details and reservation controls. -->
+                </div>
+            </section>
+            <!-- HISTORY -->
+            <section id="history" class="page" hidden>
+                <h1 class="mt-6 mb-4">History</h1>
+                <!-- TODO: Build this page. -->
+                <p>Page under development.</p>
+            </section>
+            <!-- SETTINGS -->
+            <section id="settings" class="page" hidden>
+                <h1 class="mt-6 mb-4">Settings</h1>
+                <!-- TODO: Build this page. -->
+                <p>Page under development.</p>
+            </section>
+        </main>
+        <footer class="footer flex flex-wrap justify-between gap-2"><span>PARADA · Campus parking system</span><span>Student prototype</span></footer>
+    </div>
+</body>
 </html>
