@@ -16,19 +16,24 @@ let notices = [];
 let notificationsOn = true;
 const get = id => document.getElementById(id);
 
+//eto para kahit irefresh yung page, di nawawala yung inedit sa demo mode
 function loadDemo() {
     try {
-        const saved = JSON.parse(localStorage.getItem('paradaHalfwayV1'));
+        const saved = JSON.parse(localStorage.getItem('paradaLocalStorage'));
         if (saved) return saved;
     } catch (err) { console.log(err); }
     return { active: null, history: [], name: 'Demo student' };
 }
+
+//eto para ma-save sa localStorage yung inedit sa demo mode
 function saveDemo() {
-    localStorage.setItem('paradaHalfwayV1', JSON.stringify(data));
+    localStorage.setItem('paradaLocalStorage', JSON.stringify(data));
     occupiedSlots = demoOccupied.slice();
     if (data.active) occupiedSlots.push(data.active.slot);
     renderAll();
 }
+
+
 function message(id, text, success = false) {
     get(id).textContent = text;
     get(id).classList.toggle('success', success);
